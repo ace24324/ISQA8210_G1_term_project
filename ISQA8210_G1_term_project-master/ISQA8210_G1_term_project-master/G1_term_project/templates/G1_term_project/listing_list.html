@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Properties Available for Sale</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        {% endfor %}
+    {% endif %}
+    {% if listing_list %}
+        <table class="table table-bordered">
+        <thead><tr>
+            <th>Listing #</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Neighborhood</th>
+            <th>Price</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip</th>
+        </tr></thead>
+            {% for listing in listing_list %}
+                {%  if listing.get_status_display == "Available" or listing.get_status_display == "Pending" %}
+                <tr class="table-secondary">
+                    <td><a href="{{ listing.get_absolute_url }}">{{ listing.listing_id }}</a></td>
+                    <td>{{ listing.get_status_display}}</td>
+                    <td>{{ listing.description}}</td>
+                    <td>{{ listing.get_type_display}}</td>
+                    <td>{{ listing.get_prop_neighborhood_display}}</td>
+                    <td>{{ listing.price}}</td>
+                    <td>{{ listing.street_address }}</td>
+                    <td>{{ listing.city }}</td>
+                    <td>{{ listing.state}}</td>
+                    <td>{{ listing.zip}}</td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{% url 'listing_update' pk=listing.pk %}" class="btn btn-primary">Edit Listing</a></td>
+                    {% endif %}
+                {%  endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no Listings on the site.</p>
+    {% endif %}
+{% endblock %}

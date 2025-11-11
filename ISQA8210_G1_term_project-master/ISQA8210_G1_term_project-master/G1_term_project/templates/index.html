@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <title>Welcome to Your Dream Home!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .welcome-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .welcome-container h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+        .welcome-container p {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        .ahr-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            border-radius: 8px;
+        }
+        .ahr-info img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .ahr-info h2 {
+            margin: 10px 0;
+            color: #34495e;
+        }
+        .ahr-info p {
+            font-size: 1em;
+            color: #555;
+        }
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .contact-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+
+    <body>
+    <div class="welcome-container">
+        <h1>Welcome to Your Dream Home</h1>
+        <p>Discover the perfect property with the guidance of a trusted real estate expert.</p>
+        <div class="ahr-info">
+            <h2></h2>
+            <p>Here are AdVance Home Real Estate we make our clients feel like family.  We believe the journey to finding your new home should
+                be enjoyable and we want to be your partner along the way!  On the site you'll find a listing of all of
+            our available properties and will be able to search for the perfect home to fit your budget and desires.</p>
+            <a href="{% url 'contact' %}" class="contact-btn">Contact Us</a>
+        </div>
+    </div>
+    </body>
+
+    <h2>Please check out our Featured Property of the week!</h2>
+    {% if objects %}
+        <table class="table table-bordered">
+            {% for listings in objects %}
+                {% if listings.featured == True%}
+                <thead>
+                <tr>
+                    <th>Listing #</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Neighborhood</th>
+                    <th>Price</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                </tr>
+                </thead>
+                    <tr class="table-secondary">
+                    <td><a href="{{ listings.get_absolute_url }}">{{ listings.listing_id }}</a></td>
+                    <td>{{ listings.description}}</td>
+                    <td>{{ listings.get_type_display}}</td>
+                    <td>{{ listings.get_prop_neighborhood_display}}</td>
+                    <td>{{ listings.price }}</td>
+                    <td>{{ listings.street_address }}</td>
+                    <td>{{ listings.city }}</td>
+                    <td>{{ listings.state }}</td>
+                    <td>{{ listings.zip }}</td></tr>
+        </table>
+        <table class="table table-bordered">
+            {% if listings.prop_image1 %}
+            <tr><td>
+                <img src="{{listings.prop_image1.url}}">
+            </td></tr>
+            {%  endif %}
+            {% if listings.prop_image2 %}
+            <tr><td>
+                <img src="{{listings.prop_image2.url}}">
+            </td></tr>
+            {%  endif %}
+            {% if listings.prop_image3 %}
+            <tr><td>
+                <img src="{{listings.prop_image3.url}}">
+            </td></tr>
+            {%  endif %}
+            {% if listings.prop_image4 %}
+            <tr><td>
+                <img src="{{listings.prop_image4.url}}">
+            </td></tr>
+            {%  endif %}
+        </table>
+
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>There are no Listings on the site.</p>
+    {% endif %}
+{% endblock %}

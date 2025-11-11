@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>
+    <a href="{% url 'listing_list' %}">Return to All Listings</a>
+    </p>
+  <h1>Description: {{ listing.description }}</h1>
+       <p>Email our team about this listing: <a href="{%  url 'list_contact' %}">madison.vance@gmail.com</a></p>
+
+    {% if user.is_authenticated %}
+        <td><a href="{% url 'listing_update' pk=listing.pk %}" class="btn btn-primary">Edit Listing</a></td>
+    {% endif %}
+
+<table class="table table-bordered">
+  <tr><td><strong>Listing ID:</strong> {{ listing.listing_id }}</td></tr>
+  <tr><td><strong>Type of home:</strong> {{ listing.get_type_display }}</td></tr>
+  <tr><td><strong>Price:</strong> {{ listing.price }}</td></tr>
+  <tr><td><strong>Neighborhood:</strong> {{ listing.get_prop_neighborhood_display }}</td></tr>
+    <tr><td><strong>Address:</strong> {{ listing.street_address }}</td></tr>
+    <tr><td><strong>Features:</strong> {{ listing.prop_features }}</td></tr>
+  <tr><td><strong>City:</strong> {{ listing.city }}</td></tr>
+  <tr><td><strong>State:</strong> {{ listing.state}}</td></tr>
+  <tr><td><strong>Zip:</strong> {{ listing.zip }}</td></tr>
+    {% if listing.prop_image1 %}
+        <tr><td><div>
+            <img src="{{ listing.prop_image1.url}}" alt="">
+        </div></td></tr>
+    {% endif %}
+    {% if listing.prop_image2 %}
+        <tr><td><div>
+            <img src="{{ listing.prop_image2.url}}" alt="">
+        </div></td></tr>
+    {% endif %}
+    {% if listing.prop_image3 %}
+        <tr><td><div>
+            <img src="{{ listing.prop_image3.url}}" alt="">
+        </div></td></tr>
+    {% endif %}
+    {% if listing.prop_image4 %}
+        <tr><td><div>
+            <img src="{{ listing.prop_image4.url}}" alt="">
+        </div></td></tr>
+    {% endif %}
+</table>
+
+
+
+{% endblock %}

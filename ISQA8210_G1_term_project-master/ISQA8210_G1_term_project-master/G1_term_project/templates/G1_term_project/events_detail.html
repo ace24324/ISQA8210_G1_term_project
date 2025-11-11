@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Name: {{ events.event_name }}</h1>
+
+<table class="table table-bordered">
+  <tr><td><strong>Event ID:</strong> {{ events.event_identifier }}</td></tr>
+    <tr><td><strong>Date:</strong> {{ events.event_date }}</td></tr>
+    <tr><td><strong>Description:</strong> {{ events.event_desc }}</td></tr>
+  <tr><td><strong>Event Link:</strong> {{ events.event_link }}</td></tr>
+
+</table>
+
+    <p>
+    <a href="{% url 'events_list' %}">Return to Event Listings</a>
+    </p>
+
+
+{% endblock %}

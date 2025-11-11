@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Upcoming Events</h1>
+    <h2>Here are events in and around the Omaha area!</h2>
+  {%  if events_list %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Description</th>
+          <th>More Info</th>
+      </tr>
+      </thead>
+       {% for event in events_list %}
+                <tr class="table-secondary">
+                     <td><a href="{{ event.get_absolute_url }}">{{ event.event_identifier }}</a></td>
+                    <td>{{ event.event_name }}</td>
+                    <td>{{ event.event_date}}</td>
+                    <td>{{ event.event_desc}}</td>
+                    <td><a href="{{ event.event_link }}">More Information</a></td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{% url 'events_update' pk=event.pk %}" class="btn btn-primary">Edit Event</a></td>
+                    {% endif %}
+                </tr>
+      {% endfor %}
+
+  </table>
+    {% else %}
+        <p>There are no Events listed at this time.</p>
+    {% endif %}
+
+
+
+
+<body>
+  <div>
+    <p>&copy; 2025 Events Central. All rights reserved.</p>
+  </div>
+</body>
+
+{% endblock %}

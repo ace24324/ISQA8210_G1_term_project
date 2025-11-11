@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- filtered_results.html -->
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Find Matching Properties</button>
+</form>
+
+
+<ul>
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Listing #</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Neighborhood</th>
+        <th>Price</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+    </tr>
+    </thead>
+    {% for result in object_list %}
+            {%  if result.get_status_display == "Available" or result.get_status_display == "Pending" %}
+            <tr class="table-secondary">
+                <td><a href="{{ result.get_absolute_url }}">{{ result.listing_id }}</a></td>
+                    <td>{{ result.get_status_display }}</td>
+                    <td>{{ result.description}}</td>
+                    <td>{{ result.get_type_display}}</td>
+                    <td>{{ result.get_prop_neighborhood_display}}</td>
+                    <td>{{ result.price }}</td>
+                    <td>{{ result.street_address }}</td>
+                    <td>{{ result.city }}</td>
+                    <td>{{ result.state }}</td>
+                    <td>{{ result.zip }}</td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{% url 'listing_update' pk=result.pk %}" class="btn btn-primary">Edit Listing</a></td>
+                    {% endif %}
+            </tr>
+            {%  endif %}
+        {% empty %}
+        </table>
+        <li>No results found.</li>
+    {% endfor %}
+</ul>
+
+{% endblock  %}
+
